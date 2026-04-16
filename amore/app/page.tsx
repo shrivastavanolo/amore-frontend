@@ -1,19 +1,12 @@
-import Link from "next/link"
+"use client"
+import { useEffect } from "react"
+import { useRouter } from "next/navigation"
 
-export default function Home() {
-  return (
-    <main className="min-h-screen flex flex-col items-center justify-center gap-6">
-      <h1 className="text-5xl font-bold">Amore 💍</h1>
-      <p className="text-lg text-gray-600">
-        Design beautiful wedding invitations in minutes
-      </p>
-
-      <Link
-        href="/login"
-        className="px-6 py-3 rounded bg-black text-white"
-      >
-        Get Started
-      </Link>
-    </main>
-  )
+export default function RootPage() {
+  const router = useRouter()
+  useEffect(() => {
+    const token = localStorage.getItem("token")
+    router.replace(token ? "/dashboard" : "/login")
+  }, [router])
+  return null
 }

@@ -1,28 +1,174 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&family=Poppins:wght@300;400;500;600&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* === Amore Invites Co. Brand Palette === */
+  /* Primary: hot magenta from logo birds */
+  --amore-pink: #E8006A;
+  --amore-pink-light: #FF4DA6;
+  --amore-pink-pale: #FFF0F7;
+  --amore-pink-subtle: #FFE0F0;
+
+  /* Gold: from logo star/frame */
+  --amore-gold: #D4A017;
+  --amore-gold-light: #F4C542;
+  --amore-gold-pale: #FDF8EC;
+  --amore-gold-subtle: #FAF0D0;
+
+  /* Neutral warm beige (logo background) */
+  --amore-beige: #FDF7F2;
+  --amore-cream: #FFF9F5;
+  --amore-blush: #FAF0F5;
+
+  /* Ink */
+  --amore-ink: #1A0A12;
+  --amore-ink-mid: #4A2235;
+  --amore-ink-soft: #7A4D63;
+  --amore-ink-muted: #A87D95;
+
+  /* === UI Tokens mapped to brand === */
+  --bg:              var(--amore-beige);
+  --bg-secondary:    var(--amore-blush);
+  --surface:         var(--amore-cream);
+  --border:          #F0D8E8;
+  --border-strong:   #E0B8D0;
+
+  --text-primary:    var(--amore-ink);
+  --text-secondary:  var(--amore-ink-mid);
+  --text-muted:      var(--amore-ink-muted);
+
+  --accent:          var(--amore-pink);
+  --accent-light:    var(--amore-pink-pale);
+  --accent-subtle:   var(--amore-pink-subtle);
+  --accent-dark:     #B8004F;
+
+  --gold:            var(--amore-gold);
+  --gold-light:      var(--amore-gold-pale);
+  --gold-subtle:     var(--amore-gold-subtle);
+
+  --success:         #3D7A52;
+
+  /* Typography */
+  --font-display:    'Cormorant Garamond', Georgia, serif;
+  --font-body:       'DM Sans', system-ui, sans-serif;
+  --font-ui:         'Poppins', system-ui, sans-serif;
+
+  /* Shadows — warm-tinted */
+  --shadow-sm:  0 1px 3px rgba(184,0,79,0.06), 0 1px 2px rgba(26,10,18,0.04);
+  --shadow-md:  0 4px 16px rgba(184,0,79,0.10), 0 2px 6px rgba(26,10,18,0.06);
+  --shadow-lg:  0 12px 40px rgba(184,0,79,0.14), 0 4px 16px rgba(26,10,18,0.08);
+  --shadow-pink: 0 0 0 3px rgba(232,0,106,0.18);
+
+  --radius:    6px;
+  --radius-lg: 14px;
+  --radius-xl: 20px;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--bg);
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--border-strong); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--text-muted); }
+
+/* === Animations === */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+@keyframes shimmer {
+  0%   { background-position: -200% 0; }
+  100% { background-position:  200% 0; }
+}
+@keyframes pulsePink {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(232,0,106,0.3); }
+  50%       { box-shadow: 0 0 0 6px rgba(232,0,106,0); }
+}
+
+.animate-fade-up  { animation: fadeUp 0.5s cubic-bezier(0.16,1,0.3,1) both; }
+.animate-fade-in  { animation: fadeIn 0.4s ease both; }
+
+.delay-1 { animation-delay: 0.07s; }
+.delay-2 { animation-delay: 0.14s; }
+.delay-3 { animation-delay: 0.21s; }
+.delay-4 { animation-delay: 0.28s; }
+.delay-5 { animation-delay: 0.35s; }
+
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    var(--amore-pink-pale) 25%,
+    var(--border) 50%,
+    var(--amore-pink-pale) 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.6s infinite;
+}
+
+/* === Shared btn-primary === */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  padding: 10px 20px;
+  background: linear-gradient(135deg, var(--amore-pink) 0%, #C8005C 100%);
+  color: white;
+  border: none;
+  border-radius: var(--radius);
+  font-family: var(--font-ui);
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.18s ease;
+  letter-spacing: 0.01em;
+  box-shadow: 0 2px 8px rgba(232,0,106,0.30);
+}
+.btn-primary:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 14px rgba(232,0,106,0.40);
+}
+.btn-primary:active:not(:disabled) {
+  transform: translateY(0);
+}
+.btn-primary:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  background: none;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius);
+  font-family: var(--font-ui);
+  font-size: 13px;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.btn-ghost:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+  background: var(--accent-light);
 }
